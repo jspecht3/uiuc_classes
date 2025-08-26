@@ -1,0 +1,252 @@
+\documentclass[11pt]{article}
+% packages
+%% font, back-end
+\usepackage[english]{babel} % more, non-english characters
+\usepackage{csquotes} % back-end quotation forming
+\usepackage[T1]{fontenc} % back-end for non-english characters
+\usepackage{graphicx} % advanced graphics support
+%% formatting
+\usepackage{comment} % adds the comment environment
+\usepackage[letterpaper,top=2.54cm,bottom=2.54cm,left=2.54cm,right=2.54cm,marginparwidth=1.75cm]{geometry} % page dimensions
+\usepackage[colorlinks=true, allcolors=blue]{hyperref} % makes hyper-links
+\usepackage{ragged2e} % text alignment
+\usepackage{setspace} % linespacing
+\onehalfspacing
+
+%% math, symbols
+\usepackage{amsmath} % math formulas
+\usepackage{array} % arrays inside math mode
+\usepackage{textcomp, gensymb} % more symbols and get rid of pesky warnings
+\usepackage{pdfpages}
+
+%% figures, tables
+\usepackage{booktabs} % better tables
+\usepackage{longtable} % make tables that span multiple pages
+\usepackage{multirow} % multi-columns and rows for tables
+\usepackage{subfig} % allows for subfigures
+
+\makeatletter
+  \renewcommand\l@section{\@dottedtocline{2}{1em}{2em}}
+  \renewcommand\l@subsection{\@dottedtocline{2}{2em}{3em}}
+\makeatother
+
+%% mutliple columns for the text
+\usepackage{multicol}
+\usepackage{blindtext}
+
+\newcommand{\iso}[2]{$^{#2}$#1}
+\renewcommand{\arraystretch}{1.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE {PHYS 427}} \\ \vspace{5pt}
+{\LARGE {Thermal and Statistical Physics}} \\ \vspace{5pt}
+\end{center}
+
+\tableofcontents
+\clearpage
+
+\section{Laws of Thermodynamics}
+The zeroth law states if two systems are both in thermal equilibrium with a third system, they are in thermal equilibrium with each other. \\
+
+The first law states the change in internal energy of a system is equal to the difference between the heat supplied to the system and the work done by the system on its surroundings.
+\begin{equation}
+    \Delta U = Q - W
+\end{equation} \\
+
+The second law states the change in entropy must be greater than or equal to zero. \\
+
+The third law states the entropy of a system approaches 0 at absolute zero.
+
+
+\section{Counting Microstates}
+Use the choose operator
+\newcommand{\Nchoosen}{\begin{equation}
+    \Omega(n, N) = \frac{N!}{n! (N - n)!} \equiv \binom{N}{n}
+\end{equation}}
+\Nchoosen
+
+Variance of $n$:
+\begin{equation}
+    \sigma_n^2 = \langle n^2 \rangle - \langle n \rangle ^2
+\end{equation}
+
+Entropy
+\begin{equation}
+    \sigma = \ln \Omega
+\end{equation}
+
+\begin{equation}
+    \sigma_{a + b} = \sigma_a + \sigma_b 
+\end{equation}
+
+Einstein Solid
+\begin{equation}
+    \sigma = N \ln U
+\end{equation}
+
+
+\section{Entropy}
+Fundamental Temperature
+\begin{equation}
+    \frac{1}{\tau} \equiv \frac{\partial \sigma}{\partial U} \equiv \frac{1}{kT}
+\end{equation}
+
+Conventional Entropy
+\begin{equation}
+    S = k \ln \Omega
+\end{equation}
+
+\begin{equation}
+    \frac{1}{T} \equiv \frac{\partial S}{\partial U}
+\end{equation}
+
+Pressures are equal at mechanical equilibrium
+\begin{equation}
+    p = T \left( \frac{\partial S}{\partial V} \right)_{U,N}
+\end{equation}
+
+
+\section{Canonical Ensemble}
+For all possible energies, the partition function is defined as:
+\begin{equation}
+    Z = \Sigma_i e^{-\epsilon_i/kT} = \Sigma_i e^{-\beta \epsilon_i}
+\end{equation}
+
+Each state has a probability given by the ratio of the Boltzmann factor and the partition function:
+\begin{equation}
+    p = \frac{\Sigma_i e^{-\beta \epsilon_i}}{Z}
+\end{equation}
+
+Energy given by Z:
+\begin{equation}
+    U = \langle \varepsilon \rangle = - \frac{\partial}{\partial \beta} \ln Z
+\end{equation}
+
+For a paramagnet
+\begin{equation}
+    U = -\mu B \tanh{\beta \mu B}
+\end{equation}
+
+Equipartition theorem states that the partition function of a system of $N$ particles is the product of the individual partition functions. If the particles are identical and distinguishable, the partition function is given as:
+\begin{equation}
+    Z_{total} = Z_1^N
+\end{equation}
+
+If the particles are indistinguishable,
+\begin{equation}
+    Z = \frac{Z_1^N}{N!}
+\end{equation}
+
+
+\subsection{Quantum Density}
+The quantum density is defined such that
+\begin{equation}
+    Z = n_Q V
+\end{equation}
+
+Therefore, the quantum density is given as
+\begin{equation}
+    n_Q \equiv \left( \frac{mkT}{2\pi \hbar^2} \right)^{3/2}
+\end{equation}
+
+If the density $n$ is much less than $n_Q$, then this is called the classical regime. In the classical regime, quantum effects are unimportant.
+
+
+\subsection{Equipartition Theorem}
+For many high-temperature cases, $U = \alpha NkT$ (Einstein model, ideal gas, diatomic gas) where $alpha$ is the number of quadratic degrees of freedom.
+
+For a Maxwell distribution,
+\begin{align}
+    v_{peak} = \sqrt{\frac{2kT}{m}} \\
+    \langle v \rangle = \sqrt{\frac{8kt}{\pi m}} \\
+    \langle v^2 \rangle = \frac{3kt}{m}
+\end{align}
+
+\subsection{Sackur-Tetrode Equation}
+Equation that gives the entropy of an ideal gas
+\begin{equation}
+    S = Nk \left[ \ln{\frac{n_QV}{N}} + \frac{5}{2} \right]
+\end{equation}
+\begin{equation}
+    F = - NkT \left[ \ln{\frac{n_QV}{N}} + 1 \right]
+\end{equation}
+
+
+\section{Thermodynamic Potentials}
+
+\begin{itemize}
+    \item Helmholtz is the work provided to create a system at constant T.
+    \item Enthalpy is the work required to create a system and displace the gas in the volume of the system.
+    \item Gibbs is enthalpy minus T$\Delta$S because the heat of the gas was also removed.
+\end{itemize}
+
+Cannot have potentials with natural variables of V,P or T,S because these are conjugate pairs.
+\begin{center}
+\begin{tabular}{c|c|c|c}
+    {\bf Energy} & {\bf Nat. Vars.} & {\bf Expression} & {\bf Differential} \\ \hline
+    Internal & S,V & $U = U(S, V)$ & $dU = TdS - pdV$ \\
+    Helmholtz & T,V & $F \equiv U - TS$ & $dF = -SdT - pdV$ \\
+    Enthalpy & S,P & $H \equiv U + pV$ & $dH = TdS + Vdp$ \\
+    Gibbs & T,P & $G \equiv U + pV - TS$ & $dG = Vdp - SdT$
+\end{tabular}
+\end{center}
+
+\begin{equation}
+    F = - kT \ln{Z}
+\end{equation}
+
+\subsection{Chemical Potential}
+If N is allowed to change,
+\begin{equation}
+    \mu = 
+    -T \left( \frac{\partial S}{\partial N} \right)_{U,V} = 
+    \left( \frac{\partial U}{\partial N} \right)_{S,V} = 
+    \left( \frac{\partial F}{\partial N} \right)_{T,V}
+\end{equation}
+
+For some external force, $\mu$ takes on the energy associated with that force. For gravity,
+\begin{equation}
+    \mu = kT \ln{\frac{n(h)}{n_Q(T)}} + mgh
+\end{equation}
+
+For an ideal gas, and generally,
+\begin{equation}
+    \mu = kT \ln{\frac{n}{n_Q}}
+\end{equation}
+
+When multiple species are in equilibrium:
+\begin{equation}
+    \mu_1 + \mu_2 + ... + \mu_n = 0
+\end{equation}
+
+
+\section{Grand Canonical Ensemble}
+Gibbs Factor
+\begin{equation}
+    e^{-(\varepsilon_j - \mu N_i) / kT}
+\end{equation}
+
+Grand partition function:
+\begin{equation}
+    \xi = \sum_{N_i} \sum_{\varepsilon_j} e^{-(\varepsilon_j - \mu N_i) / kT}
+\end{equation}
+\begin{equation}
+    \Xi = \sum_{N_i} \lambda^N Z(N, T)
+\end{equation}
+With $\lambda \equiv e^{\mu / kT}$ as the absolute activity.
+
+
+
+\section{Math Formulae}
+Choose Operator
+\Nchoosen
+
+Sterling Approximation
+\begin{equation}
+    \ln N ! \simeq N \ln N - N
+\end{equation}
+
+\end{document}

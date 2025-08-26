@@ -1,0 +1,91 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage{biblatex} %Imports biblatex package
+\addbibresource{sample.bib}
+\usepackage[english]{babel}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{pythonhighlight}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{longtable}
+\doublespacing
+
+\begin{document}
+\begin{titlepage}
+
+\centering
+\scshape
+\vspace{\baselineskip}
+
+%
+\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+\rule{\textwidth}{0.4pt}
+
+{\Huge \textbf{\textsc{NPRE 449: Homework 2 \\
+\vspace{15pt}}}}
+
+\rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+\rule{\textwidth}{1.6pt}\vspace{6pt}
+%%\centerline{\textit{University of Illinois at Urbana-Champaign}} 
+\vspace{1.5\baselineskip}
+
+
+\large \centerline{\textbf{Author:} Nathan Glaser}
+\large \centerline{\textbf{Net-ID:} nglaser3}
+\quad
+
+\vfill
+\large \centerline{September 9, 2024}
+%
+\pagenumbering{gobble}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section*{Question 1}
+\addcontentsline{toc}{section}{\protect\numberline{}Question 1}
+
+There are two distinct types of High Temperature Gas Reactors (HTGRs): Prismatic and Pebble-Bed. Both of these reactor types have identical second+ loop components, and most of their first loops are functionally similair. The main difference between the two reactor types lies in their reactor-core. 
+
+Both reactor types utilize TRistructural-ISOtropic (TRISO) particle fuel. TRISO fuel is a spherical pellet of uranium fuel, typically $UO_2$ or $UCO$, encapsulated by a porous carbon layer called the 'buffer', an Inner Pyrolytic-Carbon layer 'IPyC', a Silicon Carbide (SiC) layer, and an Outer Pyrolytic-Carbon layer 'OPyC'.
+
+Prismatic HTGRs superimpose these TRISO particles into a graphite matrix, forming them into hexagonal compacts. These compacts are then stacked together to form large blocks. The reactor core of prismatic HTGRs are comprised entirely of these blocks; no other structural materials are present, like steel. These blocks have some separation between them, allowing for helium flow, cooling the core blocks. 
+
+Pebble-Beds HTGRs superimpose these TRISO particles into large spherical pellets comprised of graphite. These pellets are then free to move throughout the reactor core. This is done to enable a process called 'online refueling', as the pellets actually travel (usually) down through the reactor. These pellets are then analyzed to determine how depleted they are and, if they have not reached a certain burnup, are inserted back at the top of the core. Due to the spherical nature of the pellets, there is ample flow of helium coolant through the core, however because they are not perfect spheres there are still many cases of mechanical contact, and thus sharp temperature gradients across individual pellets. 
+
+\newpage
+\section*{Question 2}
+\addcontentsline{toc}{section}{\protect\numberline{}Question 2}
+
+Despite the secondary loop of LWRs and HTGRs being effectively the same, there primary loops are starkly different. 
+
+To begin, LWRs utilize water as a coolant, whereas HTGRs utilize gas, typically helium. This is interesting, as helium gas is effectively transparent to the neutrons and is already in gaseous form. Because of this, a loss of coolant accident (LOCA) induced by boiling in the reactor cannot occur. Further, because the coolant has no moderating worth, the system, from the neutrons perspective, is effectively the same if there is a LOCA, only the temperature of the system is increasing. This temperature increase is OK for two reasons: strong negative reactivity feedback with temperature increase due to Doppler broadening and thermal expansion, and high reactor core component melting temperatures. In fact, in HTGRs a LOCA scenario is classified differently than in LWRs, either a Pressurized Loss of Forced Cooling (PLOFC) or Depressurized LOFC (DLOFC). In both of these scenarios the maximum core temperature slowly increases, as free convection is sufficient to regulate residual decay heat to well below the maximum design temperature. Tangentially, HTGRs are designed to operate at much higher temperatures than their LWR counterparts. Average coolant exit temperatures in HTGRs are in the neighborhood of 700-950 $^oC$, as opposed to coolant exit temperatures in LWRs at around 310 $^oC$. Because of the aforementioned reasons, HTGRs are actually capable of surviving a station blackout event without core-meltdown or radioactive release to the public, whereas LWRs are very likely to fail. 
+
+Another strong difference is seen in the fuel of both reactor types. LWRs utilize Zircaloy-clad $UO_2$ rods placed into rigid assemblies; HTGRs utilize TRISO particles super-imposed into either a hexagonal graphite compact or spherical 'pebbles', depending on whether the reactor type is Prismatic or Pebble-bed. These TRISO fuel particles are significantly more accident-resilient than LWR fuel rods --- TRISO particles resist gaseous fission product release and meltdown due to their strong structural layers. 
+
+The final major difference between HTGRs (excluding the online refueling capabilities of pebble-bed reactors) is the lack of redundancy seen in the primary loop. There is only a single pipe attached to the reactor pressure vessel --- both the incoming and outgoing coolant flow pass through here. In contrast, there are many lines of redundancy in LWR primary loops, multiple pumps, pipes, power sources, emergency systems, etc. This is because, again, HTGRs do not really need station power to not undergo an accident, and so even if there was a DLOFC induced by a station blackout event, free convection and the various negative temperature feedback's and the rigidness of the fuel and core itself are more than enough to resist meltdown and/or radioactive release to the public. 
+
+Finally, some pros and cons for both reactor types. LWRs have strong operational history, and thus we are very comfortable with operating them. Further, the safety systems of these reactors is extremely sophisticated and redundant. However, LWRs are strongly limited by water's ability to transfer heat out of the core, complex two-phase flow is nearly in-avoidable. Further, their coolant outlet temperature is relatively cold --- 310 $^oC$. In contrast, HTGRs have high coolant outlet temperatures, and do not experience two-phase flow in the primary loop. Further, HTGRs are strongly passively safe, mainly due to TRISO's fission product release resilience / structural rigidness and the fuel's strong negative thermal feedback. One major downside of HTGRs is the core is mostly comprised of graphite --- a very strange material. Graphite, because its a solid, can be very dangerous at low core temperatures where the Wigner effect builds up and is not released. 
+
+\newpage
+\section*{Question 3}
+\addcontentsline{toc}{section}{\protect\numberline{}Question 3}
+
+HTGR reactor vessels are pressurized to force a higher gaseous coolant density. Higher gas density results in stronger convection, effectively removing more heat from the core. The implications of this is that cooling of the core is strongly dependent on the vessel being pressurized, as at atmospheric pressure the density of the coolant can be orders of magnitude lower. Because of this pressurization requirement for cooling, the maximal temperatures the core experiences during PLOFC and DLOFC are different by hundreds of degrees. DLOFC maximum temperatures can reach north of 300 degrees higher than PLOFC events. Further implications are the leakage of helium from the core. Because helium is a very small particle, and due to the strong pressure gradient present between atmosphere and the pressure vessel, there is roughly $10\%$ loss of helium coolant per year. 
+\end{document}

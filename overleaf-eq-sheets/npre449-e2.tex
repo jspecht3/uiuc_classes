@@ -1,0 +1,279 @@
+\documentclass{article}
+
+\usepackage[english]{babel}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{NPRE 449 \\ Nuclear Systems Engineering and Design \\ Equation Sheet}
+\author{Joseph Specht}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\newpage
+\section{Heat Conduction}
+
+\subsection{Fourier's Law}
+\begin{equation}
+    q'' = - k \nabla T
+\end{equation}
+\begin{equation}
+    q'' = -k \frac{dT}{dx}
+\end{equation}
+
+When Fourier's law is used to compare the heat flux with Newton's law of cooling, the directions of the heat flux should go in the same direction. Newton's law of cooling goes from high temperature to low temperature.
+
+\subsection{Thermal Conductivity}
+It changes with temperature
+
+\subsection{General Heat Diffusion Equation}
+\begin{equation}
+    \nabla \cdot k \nabla T + q''' = \rho c_p \frac{\partial T}{\partial t}
+\end{equation}
+
+This equation comes from saying the streaming of the heat in addition to the volumetric heat generation rate is equation to to the time rate of change of stored heat in a system.
+
+For 1-D steady state.
+\begin{equation}
+    \frac{d^2T}{dx^2} = \frac{-q'''}{k}
+\end{equation}
+
+Common boundary conditions include finite temperature, equal heat fluxes at a boundary, and equal temperatures at a boundary.
+
+\subsection{Treatment of Gap}
+The gap can be handled as a region with Fourier's Law or as a resistance to heat transfer with the equation:
+
+\begin{equation}
+    R = \frac{1}{h \xi_h}
+\end{equation}
+
+\section{Convection: Fluids and Heat Transfer}
+Mass:
+\begin{equation}
+    \frac{\partial \rho}{\partial t}  + \nabla \rho v = 0
+\end{equation}
+
+Momentum:
+\begin{equation}
+    \frac{\partial \rho v}{\partial t} + \nabla \rho v^2 = -\nabla P - \tau_f \frac{\xi_w}{A_f} - \rho g \sin(\theta)
+\end{equation}
+
+Energy:
+\begin{equation}
+    \frac{\partial (\rho h)}{\partial t} + \nabla \rho v h = \frac{q'' \xi_h}{A_f} + \frac{\partial P}{\partial t} + q'''
+\end{equation}
+
+\subsection{Approximations}
+These equations are the time-averaged equations that result from assuming each variable is the sum of a mean and perturbed component.
+
+Need additional closure relations.
+\begin{equation}
+    \tau_f = \frac{1}{2} f \rho v^2 = 
+    \frac{1}{2} f \frac{G^2}{\rho}
+\end{equation}
+
+\subsection{Dimensionless Groups}
+
+\begin{enumerate}
+    \item Reynold's Number
+    \begin{equation}
+        Re = \frac{inertial\ forces}{viscous\ forces} = 
+        \frac{\rho v L_c}{\mu} = 
+        \frac{v L_c}{\nu} = 
+        \frac{G L_c}{\mu}
+    \end{equation}
+    
+    \item Prandtl Number
+    \begin{equation}
+        Pr = \frac{momentum\ diffusivity}{thermal\ diffusivity} =
+        \frac{c_p \mu}{k} =
+        \frac{\nu}{\alpha} =
+        \frac{\delta}{\delta_t}
+    \end{equation}
+
+    \item Biot Number
+    \begin{equation}
+        Bi = \frac{\Delta T\ at\ boundary}{\Delta T\ in\ material} = 
+        \frac{h L_c}{k_s}
+    \end{equation}
+
+    \item Fourier's Number
+    \begin{equation}
+        Fo = \frac{heat\ conducted}{heat\ stored} = 
+        \frac{\alpha t}{L_c^2}
+    \end{equation}
+
+    \item Nusselt Number
+    \begin{equation}
+        Nu = \frac{convection\ at\ boundary}{conduction\ in\ fluid} = 
+        \frac{h L_c}{k_f} =
+        C Re^m Pr^n =
+        C Gr^m Pr^n
+    \end{equation}
+
+    \item Peclet Number
+    \begin{equation}
+        Pe = \frac{advective\ transport\ rate}{mass\ diffusion\ rate} =
+        RePr = 
+        \frac{v L_c}{\alpha}
+    \end{equation}
+
+    \item Grashof Number
+    \begin{equation}
+        Gr = \frac{bouyant\ forces}{viscous\ forces} =
+        \frac{g \beta \left(T_s - T_{\infty} \right) L_c^3}{\nu^2}
+    \end{equation}
+
+    \item Rayleigh Number
+    \begin{equation}
+        Ra = 
+        \frac{advective\ transfer\ rate\ from\ bouyancy}{diffusive\ transfer\ rate} = 
+        GrPr
+    \end{equation}
+
+    \item Jakob Number
+    \begin{equation}
+        Ja = \frac{sensible\ heat}{latent\ heat} = 
+        \frac{c_p \Delta T}{h_{fg}} = 
+        \frac{c_p \left(T_s - T_{sat} \right)}{h_{fg}}
+    \end{equation}
+
+    \item Bond/Eötvös Number
+    \begin{equation}
+        Bo = \frac{bouyant\ forces}{surface\ tension\ forces} =
+        \frac{g \left(\rho_l - \rho_v \right) L_c^2}{\sigma}
+    \end{equation}
+
+\end{enumerate}
+
+\newpage
+% commands that describe the variables used in the dimensionless groups
+\newcommand{\reynoldsnumber}{$Re$ (\ref{sec:re}) is the Reynold's number}
+\newcommand{\massdensity}{$\rho$ is the mass density}
+\newcommand{\flowvelocity}{$v$ is the flow velocity}
+\newcommand{\characteristiclength}{$L_c$ is the characteristic length}
+\newcommand{\dynamicviscosity}{$\mu$ is the dynamic viscosity of the fluid}
+\newcommand{\kinematicviscosity}{$\nu$ is the kinematic viscosity of the fluid}
+\newcommand{\specificheat}{$c_p$ is the specific heat}
+\newcommand{\thermaldiffusivity}{$\alpha$ is the thermal diffusivity}
+\newcommand{\boundarylayer}{$\delta$ is the viscous boundary layer thickness}
+\newcommand{\thermalboundarylayer}{$\delta_t$ is the thermal boundary layer thickness}
+\newcommand{\theramlconductivity}{$k$ is the thermal conductivity of the material}
+\newcommand{\convectiveheattransfercoeff}{$h$ is the convective heat transfer coefficient}
+\newcommand{\timeblurb}{$t$ is the time}
+\newcommand{\fluidthermalconductivity}{$k_f$ is the thermal conductivity of the fluid}
+\newcommand{\surfacethermalconductity}{$k_s$ is the thermal conductivity of the material at the surface}
+\newcommand{\prandtlnumber}{$Pr$ (\ref{sec:pr}) is the Prandtl number}
+\newcommand{\gravity}{$g$ is the force from gravity}
+\newcommand{\thermalexpansion}{$\beta$ is the thermal expansion coefficient}
+\newcommand{\surfacetemperature}{$T_s$ is the temperature at the surface}
+\newcommand{\bulktemperature}{$T_{\infty}$ is the temperature of the bulk fluid}
+\newcommand{\grashofnumber}{$Gr$ is the Grashof number}
+\newcommand{\deltatemperature}{$\Delta T$ is the difference in temperature}
+\newcommand{\evaporationenthalpy}{$h_{fg}$ is the enthalpy of evaporation}
+\newcommand{\saturationtemp}{$T_{sat}$ is the saturation temperature}
+\newcommand{\liquiddensity}{$\rho_l$ is the mass density of the liquid}
+\newcommand{\vapordensity}{$\rho_v$ is the mass density of the vapor}
+\newcommand{\surfacetension}{$\sigma$ is the surface tension}
+
+\subsubsection{Reynold's Number}\label{sec:re}
+\begin{equation}
+        Re = \frac{inertial\ forces}{viscous\ forces} = 
+        \frac{\rho v L_c}{\mu} = 
+        \frac{v L_c}{\nu} = \frac{G L_c}{\mu}
+\end{equation}
+
+where (i) \massdensity, (ii) \flowvelocity, (iii) \characteristiclength, (iv) \dynamicviscosity, and (v) \kinematicviscosity.
+
+\subsubsection{Prandtl Number}\label{sec:pr}
+\begin{equation}
+        Pr = \frac{momentum\ diffusivity}{thermal\ diffusivity} =
+        \frac{c_p \mu}{k} =
+        \frac{\nu}{\alpha} =
+        \frac{\delta}{\delta_t}
+\end{equation}
+
+where (i) \specificheat, (ii) \dynamicviscosity, (iii) \theramlconductivity, (iv) \kinematicviscosity, (v) \thermaldiffusivity, (vi) \boundarylayer, and (vii) \thermalboundarylayer.
+
+\subsubsection{Biot Number}\label{sec:bi}
+\begin{equation}
+        Bi = \frac{\Delta T\ at\ boundary}{\Delta T\ in\ material} = 
+        \frac{h L_c}{k_s}
+\end{equation}
+
+where (i) \convectiveheattransfercoeff, (ii) \characteristiclength, and (iii) \characteristiclength.
+
+\subsubsection{Fourier's Number}\label{sec:fo}
+\begin{equation}
+    Fo = \frac{heat\ conducted}{heat\ stored} = 
+    \frac{\alpha t}{L_c^2}
+\end{equation}
+
+where (i) \thermaldiffusivity, (ii) \timeblurb, and (iii) \characteristiclength.
+
+\subsubsection{Nusselt Number}\label{sec:nu}
+\begin{equation}
+    Nu = \frac{convection\ at\ boundary}{conduction\ in\ fluid} = 
+    \frac{h L_c}{k_f} =
+    C Re^m Pr^n =
+    C Gr^m Pr^n
+\end{equation}
+
+where (i) \convectiveheattransfercoeff, (ii) \characteristiclength, (iii) \fluidthermalconductivity, (iv) $C$ is a constant, (v) \reynoldsnumber, (vi) \prandtlnumber, (vii) $m$ is a constant, and (viii) $n$ is a constant.
+
+\subsubsection{Peclet Number}\label{sec:pe}
+\begin{equation}
+    Pe = \frac{advective\ transport\ rate}{mass\ diffusion\ rate} =
+    RePr = 
+    \frac{v L_c}{\alpha}
+\end{equation}
+
+where (i) \reynoldsnumber, (ii) \prandtlnumber, (iii) \flowvelocity, (iv) \characteristiclength, and (v) \thermaldiffusivity.
+
+\subsubsection{Grashof Number}\label{sec:gr}
+\begin{equation}
+    Gr = \frac{bouyant\ forces}{viscous\ forces} =
+    \frac{g \beta \left(T_s - T_{\infty} \right) L_c^3}{\nu^2}
+\end{equation}
+
+where (i) \gravity, (ii) \thermalexpansion, (iii) \surfacetemperature, (iv) \bulktemperature, (v) \characteristiclength, and (vi) \kinematicviscosity.
+
+\subsubsection{Rayleigh Number}\label{sec:ra}
+\begin{equation}
+    Ra = \frac{advective\ transfer\ rate\ from\ bouyancy}{diffusive\ transfer\ rate} = 
+    GrPr
+\end{equation}
+
+where (i) \grashofnumber \ and (ii) \prandtlnumber.
+
+\subsubsection{Jakob Number}\label{sec:ja}
+\begin{equation}
+    Ja = \frac{sensible\ heat}{latent\ heat} = 
+    \frac{c_p \Delta T}{h_{fg}} = 
+    \frac{c_p \left(T_s - T_{sat} \right)}{h_{fg}}
+\end{equation}
+
+where (i) \specificheat, (ii) \deltatemperature, (iii) \evaporationenthalpy, (iv) \surfacetemperature, and (v) \saturationtemp.
+
+\subsubsection{Bond/Eötvös Number}\label{sec:bo}
+\begin{equation}
+    Bo = \frac{bouyant\ forces}{surface\ tension\ forces} =
+    \frac{g \left(\rho_l - \rho_v \right) L_c^2}{\sigma}
+\end{equation}
+
+where (i) \gravity, (ii) \liquiddensity, (iii) \vapordensity, (iv) \characteristiclength, and (v) \surfacetension.
+
+\subsection{Fluid Conservation Equations}
+\subsection{Convection and Heat Transfer}
+Newton's Law of cooling:
+\begin{equation}
+    q'' = h (T_{high} - T_{low})
+\end{equation}
+
+\subsection{Conduction \& Convection w/ z Dependence}
+
+\end{document}

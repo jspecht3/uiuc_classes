@@ -1,0 +1,316 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{pythonhighlight}
+
+\begin{document}
+\begin{table}[!h!]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|c|c|}
+        \hline
+         Pe & $\frac{rate\ mass\ advection}{rate\ thermal\ diffusion }$  \\
+         Re & $\frac{intertial\ forces}{viscous\ forces}$ \\
+         \hline
+    \end{tabular}
+    \caption{Functional Forms}
+    \label{funcform}
+\end{table}
+\newcommand{\pd}[3]{\frac{\partial^{#3}#1}{\partial{#2}^{#3}}}
+\section{1-Dimensional Equations}
+\begin{subequations}
+    \begin{equation}
+        \pd{\rho}{t}{} + \pd{\rho v}{z}{} = 0
+        \label{mass}
+    \end{equation}
+    \begin{equation}
+        \pd{\rho v}{t}{} + \pd{}{z}{}\rho v^2 = -\pd{P}{z}{}-\tau_F\frac{\xi_w}{A_f} - \rho g \sin(\theta)
+        \label{momentum}
+    \end{equation}
+    \begin{equation}
+        \pd{\rho h}{t}{} + \pd{}{z}{}\rho v h = \frac{q''\xi_h}{A}+\pd{P}{t}{} + q'''
+        \label{energy}
+    \end{equation}
+\end{subequations}
+
+Where: 
+\begin{table}[!h!]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{c|c}
+         Parameter & Definition \\
+         \midrule
+         $\tau_F$ & $\frac{f\rho v^2}{2}$ = $\frac{fG^2}{2\rho}$\\
+         \hline
+         $\xi_w$ & Wetted Perimeter\\
+         \hline
+         $\xi_h$ & Heated Perimeter\\
+         \hline
+         $A_f$ & Fluid area \\
+         \hline
+    \end{tabular}
+    \label{tab:my_label}
+\end{table}
+
+f correlations:
+
+\begin{itemize}
+    \item if $Re<2100$, $ f = \frac{16}{Re}$
+    \item if $3,000 \leq Re\leq 100,000 $,  $f = \frac{0.079}{Re^{.25}}$
+\end{itemize}
+
+The energy equation hols slightly different forms for single/ double $\Phi$. For single, $h \approx c_pT$, and for double leave it as h, as temperature change doesn't happen. 
+
+To treat the boundary condition, newtons law of cooling becomes: $q'' = h(T_w - T_f)$, where $T_f$ is the temperature of the fluid we found. Nusselt number is used. 
+
+Correlations for Nusselt
+
+\begin{itemize}
+    \item Fully developed
+    \begin{itemize}
+        \item laminar: $Nu = C$.
+        \begin{itemize}
+        \item For pipe: $Nu_D = 4.36$ (constant heat flux), $Nu_d = 3.66$ constant wall temp
+        \end{itemize}
+        \item Turbulent: Dittus-Boelter: $CRe^mPr^n$
+        \begin{itemize}
+        \item Pipe flow: $C = 0.023, m = 0.8,n =0.4$ for $T_w \geq T_f$, $n = .3$ for $T_w \leq T_f$
+        \end{itemize}
+    \end{itemize}
+
+    \item Developing
+    \begin{itemize}
+        \item Hydrodynamic: $\frac{z_{FD}}{D} \approx 0.05 Re$
+        \item Thermally: laminar$:\frac{z_{FD}}{D} = 0.05RePr $ Turb: $\frac{v_{FD}}{D} \approx 10$
+    \end{itemize}
+    \item Average Nusselt over developing region
+    \begin{itemize}
+        \item $\Bar{Nu} = Nu_{FD}\left( 1 + \frac{C}{(z/d)^a} \right)$
+    \end{itemize}
+    \item Complex geometry :
+    \begin{itemize}
+        \item $L_c = D_n = \frac{4A_f}{\xi}$, $\xi$ is h when using for thermal and w when using for hydrodynamic
+        \item Rod Bundles: $Nu = FNu$
+    \end{itemize}
+    \item Fluid type:
+    \begin{itemize}
+        \item Large Pr: $Nu = 0.027Re^{0.8}Pr^{1/3}(\frac{\mu}{\mu_w})^{0.14}$, where $\mu_w$ is the viscosity at the wall
+        \item Low Pr: $Nu = 4.82 + 0.0185Pe^{0.827}$
+    \end{itemize}
+\end{itemize}
+
+\section{Analysis of fuel rod}
+\subsection{Assumptions}
+Radial component of flux is essentially constant, macroscopically you have variation but zooming in on one rod there is no real varition. There is variation in z, so flux takes the form of:
+\begin{equation}
+    \phi = \phi_0\cos(\frac{\pi z}{h_e})
+\end{equation}
+
+\begin{itemize}
+    \item Steady state
+    \item  Constant properties in each region
+    \item f is a known constant
+    \item negligible volumetric heat generatino in fluid clad and gap
+    \item neglect axial conduction
+    \item $\phi$ is uniform in r and $\theta$
+    \item  Fully developed
+\end{itemize}
+
+\subsection{What are we finding}
+\begin{enumerate}
+    \item $\Delta P$ along the channel
+    \item $T_f(z)$
+    \item  $T_f(z= h_e)$
+    \item  $T_{c,0}(z)$
+    \item $T_{c,0} max$
+    \item $T_{cl}(z)$
+    \item $T_{cl} max$
+\end{enumerate}
+
+\subsection{Solving}
+
+\begin{subequations}
+    \begin{equation}
+        \pd{G}{z}{} = 0
+        \label{mass}
+    \end{equation}
+    \begin{equation}
+       0 = -\pd{P}{z}{}-\tau_F\frac{\xi_w}{A_f} - \rho g
+        \label{momentum}
+    \end{equation}
+    \begin{equation}
+         \pd{}{z}{}G c_pT = \frac{q''\xi_h}{A} + q'''
+        \label{energy}
+    \end{equation}
+\end{subequations}
+
+simplifying:
+
+\begin{subequations}
+    \begin{equation}
+        -\pd{P}{z}{} = \tau_F\frac{\xi_w}{A_f} + \rho g
+    \end{equation}
+    \begin{equation}
+        Gc_p\pd{T}{z}{} = \frac{q''\xi_h}{A}
+    \end{equation}
+\end{subequations}
+
+solving:
+
+\begin{subequations}
+    \begin{equation}
+        \Delta P = (\frac{fG^2\xi_w}{2\rho A_f} + \rho g) \cdot l
+    \end{equation}
+    \begin{equation}
+        \begin{gathered}
+        q''' (\pi r_f^2 dz) = q''\xi_h dz\\
+        q' dz = q'' \xi_h dz\\
+        q'' = \frac{q'}{\xi_h} \\
+        q''' = \chi \Sigma_f \phi
+        q' = q'_0 \cos(\frac{\pi z}{h_e})\\
+        \pd{T}{z}{} = \frac{q'_0 \cos(\frac{\pi z}{h_e})}{GA_fc_p} \\ 
+        integrating\ from\ -\frac{h_e}{2}\ to\ z:\\
+        T_f(z) = \frac{h_eq'_0 }{\pi GA_fc_p} \left[\sin(\frac{\pi z}{h_e}) + \sin(\frac{\pi h_e}{2h_e})\right] + C_1
+    \end{gathered}
+    \end{equation}
+\end{subequations}
+
+with $T_f(z)$, find the outer clad temperature, then boom its a simple general heat diffusion equation!
+
+Clad BCs:
+\begin{enumerate}
+    \item $q'' = \frac{q'}{\xi_h} = -k_c\pd{T_c}{r}{}{}$
+    \item $T_c(r=R_{c,o},z) = T_{c,o}(z)$
+\end{enumerate}
+
+For fuel:
+
+\begin{subequations}
+    \begin{equation}
+        k\nabla^2T = -q'''
+    \end{equation}
+    \begin{equation}
+        \frac{1}{r}\pd{}{r}{}r\pd{T}{r}{} = -\frac{q'''}{k}
+    \end{equation}
+    \begin{equation}
+        \pd{T}{r}{} = -\frac{q'''}{2k}r + \frac{C_1}{r}
+    \end{equation}
+    \begin{equation}
+        T(r,z) = -\frac{q'''}{4k}r^2 + C_1\ln{r} + C_2(z)
+    \end{equation}
+    \begin{equation}
+        T(r,z) = -\frac{q_0'\cos{\frac{\pi z}{h_e}}}{4kA_{fuel}}r^2 + C_1\ln{r} + C_2(z)
+    \end{equation}
+\end{subequations}
+
+BCS:
+\begin{enumerate}
+    \item $T_{f}(z)= T_{f,o}(z)$
+    \item Finite, $C_1 = 0$
+\end{enumerate}
+
+
+
+\section{Computer Project}
+
+\begin{subequations}
+    \begin{equation}
+        A_F = Pitch^2 - \frac{\pi D_{rod}^2}{4}
+    \end{equation}
+    \begin{equation}
+        D_h = \frac{4A_f}{\xi_w}
+    \end{equation}  
+\end{subequations}
+\begin{enumerate}
+    \item In pin:
+    \begin{subequations}
+        \begin{equation}
+            k\nabla^2T + q''' = \rho c_p \pd{T}{t}{}
+        \end{equation}
+    \end{subequations}
+    \item HT at fluid boundary
+    \begin{subequations}
+        \begin{equation}
+            if\ Tw\ \leq\ T_sat:\: q'' = h(T_w - T_f),\: Dittus-Boelter
+        \end{equation}
+        \begin{equation}
+            else:\: q'' =\left[ \{Fh_{fc}(T_w - T_f)v^2\} + \{ Sh_{nb}(T_w-T_{sat})\}^2\right]^{\frac{1}{2}}
+        \end{equation}
+        \begin{equation}
+            F = \left[ 1+ \chi Pr_f (\frac{\rho_f}{\rho_g}- 1)\right]^{0.35}
+        \end{equation}
+        \begin{equation}
+            S = (1 + 0.055F^{0.1}Re_f^{0.16})^{-1}
+        \end{equation}
+        \begin{equation}
+            h_{fc} = 0.023\frac{k_f}{D_h}Re_f^{0.8}Pr_f^{0.4}
+        \end{equation}
+        \begin{equation}
+            h_{nb} = 55 (\frac{P}{P_c})^{0.12}q''^{2/3}\left(-\log{\frac{P}{P_c}}\right)^{-.55} M_w^{-0.5}
+        \end{equation}
+        \begin{equation}
+            Re_f = \frac{GD_h}{\mu_f}
+        \end{equation}
+    \end{subequations}
+    \item if $T_f \leq T_{sat}$ then single-phase $\chi=0$, else two phase need to find $\chi$
+    \item Fluid governing equations
+    \begin{subequations}
+        \begin{equation}
+            \pd{G}{z}{} = 0
+        \end{equation}
+        \begin{equation}
+            -\pd{P}{z}{} = G^2\pd{}{z}{}\frac{1}{\rho}+\frac{fG^2\xi_w}{2\rho A_f}+\rho g
+        \end{equation}
+        \begin{equation}
+            f = 0.316 Re_f^{-1/4}
+        \end{equation}
+        \begin{equation}
+            \pd{h}{z}{} = \frac{q''\xi_h}{GA_f}
+        \end{equation}
+        \begin{equation}
+            \chi_e = \frac{h-h_{f,sat}}{h_{g,sat} - h_{f,sat}}
+        \end{equation}
+        \begin{equation}
+            h = h_{fg}\chi_e + h_{f,sat}
+        \end{equation}
+        \begin{equation}
+            \pd{h}{z}{} = \chi_e\pd{h_{fg,sat}}{z}{} + \pd{h_{f,sat}}{z}{} + h_{fg}\pd{\chi_e}{z}{}
+        \end{equation}
+        \begin{equation}
+            \pd{h}{z}{} = \chi_e\pd{h_{fg,sat}}{P}{}\pd{P}{z}{}+ \pd{h_{f,sat}}{P}{}\pd{P}{z}{} + h_{fg}\pd{\chi_e}{z}{}
+        \end{equation}
+        \begin{equation}
+            \pd{\chi_e}{z}{} = \frac{1}{h_{fg}}\left[ \frac{q''\xi_h}{A_f} 
+            - \left( \chi_e\pd{h_{fg,sat}}{P}{}+ \pd{h_{f,sat}}{P}{}\right)\pd{P}{z}{}\right]
+        \end{equation}
+        \begin{equation}
+            \chi_e = \frac{c_p(T_f - T_{sat})}{h_{fg}}
+        \end{equation}
+        \begin{equation}
+            T_f = \frac{h_{fg,sat}}{c_p}\chi_e + T_{sat}
+        \end{equation}
+    \end{subequations}
+\end{enumerate}
+
+\subsection{Code Structure}
+\begin{python}
+    option = 1 or 2
+    if option == 1:
+        PWR inputs
+    if option == 2:
+        BWR inputs
+
+    iterate and solve
+    
+\end{python}
+
+\begin{equation}
+    \pd{P}{z}{} = \frac{P^{i+1} - P^i}{\Delta z}
+\end{equation}
+\begin{equation}
+    \pd{\chi_e}{z}{} = \frac{\chi_e^{i+1} - \chi_e^i}{\Delta z}
+\end{equation}
+
+solve for $\varphi^{i+1}$, given initial condition
+\end{document}

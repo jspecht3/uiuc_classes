@@ -1,0 +1,491 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage{biblatex} %Imports biblatex package
+\addbibresource{sample.bib}
+\usepackage{changepage}
+\usepackage[english]{babel}
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{empheq}
+\usepackage{pythonhighlight}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{longtable}
+\doublespacing
+
+\begin{document}
+\newcommand{\newsec}[1]{
+\section*{Question #1}
+\addcontentsline{toc}{section}{\protect\numberline{}Question #1}
+}
+\newcommand{\circled}[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\newcommand{\phase}{\left(\Vec{r},t\right)}
+\newcommand{\genheat}{\nabla \cdot k\phase \nabla T \phase + q'''\phase = \rho c_p \frac{\partial T \phase}{\partial t}}
+\newcommand{\energybalance}{\Dot{E}_{in} - \Dot{E}_{out} + \Dot{E}_{gen} = \Dot{E}_{stored}}
+\newcommand{\sscmheat}[1]{k_{#1} \nabla^2 T_{#1} \left(\Vec{r}\right) + q'''_{#1} = 0}
+\newcommand{\partia}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\qppo}{\mu_a \phi_{\gamma} E}
+\begin{titlepage}
+
+\centering
+\scshape
+\vspace{\baselineskip}
+
+%
+\rule{\textwidth}{1.6pt}\vspace*{-\baselineskip}\vspace*{2pt}
+\rule{\textwidth}{0.4pt}
+
+{\Huge \textbf{\textsc{NPRE 449: Homework 6 \\
+\vspace{15pt}}}}
+
+\rule{\textwidth}{0.4pt}\vspace*{-\baselineskip}\vspace{3.2pt}
+\rule{\textwidth}{1.6pt}\vspace{6pt}
+%%\centerline{\textit{University of Illinois at Urbana-Champaign}} 
+\vspace{1.5\baselineskip}
+
+
+\large \centerline{\textbf{Author:} Nathan Glaser}
+\large \centerline{\textbf{Net-ID:} nglaser3}
+\quad
+
+\vfill
+\large \centerline{October 21, 2024}
+%
+\pagenumbering{gobble}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\newsec{1}
+
+To begin, the general heat diffusion equation is:
+\begin{equation}
+    \genheat
+\end{equation}
+
+Next, assuming constant material properties and steady state:
+\begin{equation}
+    \sscmheat{}
+\end{equation}
+
+Next, to solve:
+\begin{equation}
+    \begin{gathered}
+        \nabla^2T(r) = -\frac{q'''}{k}\\
+        \frac{1}{r^2}\partia{}{r}r\partia{T}{r} = -\frac{q'''}{k}\\
+        r^2\partia{T}{r} = -\frac{q'''r^3}{3k} + C_1\\
+        T = -\frac{q'''r^2}{6k} + \frac{C_1}{r} + C_2
+    \end{gathered}
+\end{equation}
+
+
+Next for our boundary conditions, we have symmetry or finiteness at the center line, and a temperature condition at the surface:
+
+\begin{equation}
+\begin{gathered}
+    -k_f \frac{\partial T_f(r = 0)}{\partial r} = 0 \quad or \quad T(r = 0) \neq \pm \infty \\
+    T_f(r = r_o) = T_{sat,water} = 668.169 ^oF
+\end{gathered}
+\end{equation}
+
+
+Thus we get $C_1$ to be 0 by the finiteness BC, and then $C_2$ to be:
+
+\begin{equation}
+    C_2 = 668.169 + \frac{q'''r_o^2}{6 k_f} = 957.520
+\end{equation}
+
+The maximum temp is simply the center line, or $C_2$. This can be derived by differentiating the temperature distribution with respect to r, setting this equal to 0, and solving for r; however we can trivially look at the distribution's equation and see it is a second degree non-shifted polynomial, and thus the maximum is located at $r=0$.
+
+\[
+\boxed{T_{max} = 957.520 \ ^oF}
+\]
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\newsec{2}
+To begin:
+\begin{equation}
+    \genheat
+\end{equation}
+
+Assuming steady state:
+\begin{equation}
+    \sscmheat{f}
+\end{equation}
+
+where $q'''$ is defined as:
+
+\begin{equation}
+    q''' = \qppo e^{-\mu_a x}
+\end{equation}
+
+Solving this diff-eq yields the following general solution:
+
+\begin{equation}
+    T_f(x) = -\frac{\qppo e^{-\mu_a x}}{\mu_a^2 k } + C_1x + C_2
+    \label{q2gensol}
+\end{equation}
+
+Next, our boundary conditions. We have two boundary conditions, one at the left surface and one for the right surface. These two are functionally similar, however the $\Delta T$ is flipped:
+
+\begin{equation}
+\begin{gathered}
+    -k \partia{T(x = 0)}{x} = h \left( T_{\infty} - T_s\right)\\ 
+    -k \partia{T(x=t)}{x} = h \left(T_s - T_{\infty}\right)
+\end{gathered}
+\end{equation}
+Where $x=0$ is the left surface and $x=t$ is the right surface.
+
+Substituting in \eqref{q2gensol} to these BCs yields (and rearranging):
+
+\begin{equation}
+    \frac{k}{h} \cdot C_1 - C_2 = -\frac{\qppo}{\mu_a h} - \frac{\qppo}{\mu_a^2 k} - T_{\infty}
+\end{equation}
+
+\begin{equation}
+    \left( h t + k \right) \cdot C_1+ h \cdot C_2 = \frac{\qppo e^{-\mu_a t}}{\mu_a} \left( \frac{h}{\mu_a k} - 1\right) + h T_{\infty}
+\end{equation}
+
+Forming into matrices and solving (via \texttt{scipy.linalg.solve}):
+
+\begin{equation}
+    \begin{bmatrix}
+    \frac{k}{h} & -1 \\
+    h t + k & h
+    \end{bmatrix} 
+    \begin{bmatrix}
+        C_1 \\
+        C_2
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        -\qppo\left(\frac{1}{\mu_a h} - \frac{1}{\mu_a^2 k}\right) - T_{\infty} \\
+        \frac{\qppo e^{-\mu_a t}}{\mu_a} \left( \frac{h}{\mu_a k} - 1\right) + h T_{\infty}
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \begin{bmatrix}
+        C_1 \\ C_2
+    \end{bmatrix}
+     = 
+     \begin{bmatrix}
+         -2599.532 \quad \frac{^oF}{ft}\\ 1695.497  \quad ^oF
+     \end{bmatrix}
+\end{equation}
+
+
+\subsection*{Part A}
+Now, to find the surface temperatures we simply plug in $C_1$, $C_2$, and the x-location of the surfaces into \eqref{q2gensol}. 
+
+\[
+\boxed{T_f(x = 0) = 481.156} \]\[
+\boxed{T_f(x = t) = 366.720}
+\]
+
+\subsection*{Part B}
+Next to find the maximum temperature, we simply differentiate the temperature distribution, set it equal to 0, solve for x, and then plug this x back into the temperature distribution. 
+\begin{equation}
+    \begin{gathered}
+        0 = \partia{T}{x} = \frac{\qppo e^{-\mu_a x}}{\mu_ak}+C_1 \\
+    \frac{-C_1 \mu_a k}{\qppo} = e^{-\mu_a x} \\
+    \frac{ln\left(\frac{-C_1 \mu_a k}{\qppo}\right)}{\mu_a} = x \\
+    x = 0.167 \ ft
+    \end{gathered}
+\end{equation}    
+
+\[
+\boxed{T_f(x = 0.167) = 912.506 \ ^oF}
+\]
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\newsec{3}
+To begin, the general heat diffusion equation:
+\begin{equation}
+    \genheat
+\end{equation}
+
+Again this is steady state, and because it is a multi-region problem we can separate into two independent equations. Subscript $f$ for the fuel, and $c$ for the clad: 
+\begin{equation}
+    \begin{gathered}
+        \sscmheat{f}\\
+        \nabla^2 T_c(\Vec{r}) = 0
+    \end{gathered}
+\end{equation}
+Solving these two ODEs is trivial but for completeness will still be done. For the fuel:
+\begin{equation}
+    \begin{gathered}
+        \sscmheat{f}\\
+        \frac{1}{r}\partia{}{r}r\partia{T_f}{r} = \frac{-q'''}{k_f}\\
+        r\partia{T_f}{r} = \frac{-q'''r^2}{2k_f} + C_1 \\
+        T_f(r) = \frac{-q'''r^2}{4k_f} + C_1 \ ln(r) + C_2
+    \end{gathered}
+\end{equation}
+
+And then for the clad:
+
+\begin{equation}
+    \begin{gathered}
+        \nabla^2 T_c(\Vec{r}) = 0 \\
+        \frac{1}{r}\partia{}{r}r\partia{T_c}{r} = 0\\
+        r\partia{T_c}{r} = C_3 \\
+        T_c(r) = C_3 \ ln(r) + C_4
+    \end{gathered}
+\end{equation}
+
+
+Next, we have four boundary conditions:\newline
+
+\begin{adjustwidth}{130pt}{0pt}
+    \begin{itemize}
+        \item[\circled{\textbf{1}}] $\displaystyle-k_f\nabla T_f(0) = 0$ or finiteness at $T_f(0)$
+        \item[\circled{\textbf{2}}] $\displaystyle -A_{s,f}k_f \nabla T_f(r_{f,s}) = -A_{s,ci}k_c \nabla T_c(r_{c,is})$
+        \item[\circled{\textbf{3}}] $\displaystyle -k_f \nabla T_f(r_{f,s}) = h_{gc} \left[\ T_f(r_{f,s}) - T_c(r_{c,is})\ \right]$
+        \item[\circled{\textbf{4}}] $\displaystyle T_c(r_{c,os}) = 295 \ ^oC$
+    \end{itemize}
+\end{adjustwidth}
+
+where $r_{c,is}$ is the inner surface radius of the clad region, $r_{c,os}$ is the clad outer surface, $r_{f,s}$ is the fuel surface, $A_{s,f}$ is the surface area of the fuel region, $A_{s,ci}$ is the interior surface area of the clad region.
+
+\newpage
+With these BCs we can solve for our temperature distributions. To begin, utilizing \circled{1} we can trivially see that $C_1$ must be 0, as $ln(r)$ is undefined at 0. 
+
+Next, investigating \circled{2}:
+
+\begin{equation}
+    \begin{gathered}
+        -A_{s,f}k_f \partia{}{r}\left(\frac{-q'''r^2}{4k_f} + C_2\right) = 
+        -A_{s,ci}k_c \partia{}{r}\left(C_3 \ ln(r) + C_4\right) \\
+        -k_f (2\pi r_{f,s}h)\left(\frac{-q'''r}{2k_f} \right) = (2\pi r_{c,is}h)\frac{-k_c C_3}{r}\\
+        C_3 = \frac{-q'''r_{f,s}r_{c,is}}{2k_c} * \frac{r_{f,s}}{r_{c,is}}
+        C_3 = -411.930
+    \end{gathered}
+\end{equation}
+
+Then, \circled{4}:
+
+\begin{equation}
+    \begin{gathered}
+        T_c(r_{c,os}) = 295 \ ^oC \\
+        C_3 \ ln(r_{c,os}) + C_4 = 295 \ ^oC\\
+        C_4 = 295 - C_3 \ ln(r_{c,os}) \\
+        C_4 = -1794.960
+    \end{gathered}
+\end{equation}
+
+Finally, with knowledge of $C_3$, we can investigate \circled{3}:
+
+\begin{equation}
+    \begin{gathered}
+        -k_f \nabla T_f(r_{f,s}) = h_{gc} \left[\ T_f(r_{f,s}) - T_c(r_{c,is})\ \right]\\
+        k_f \partia{}{r}\left(\frac{-q'''r^2}{4k_f} + C_2\right) = 
+        h_{gc} \left[\frac{-q'''(r_{f,s})^2}{4k_f} + C_2 - C_3 \ ln(r_{c,is}) - C_4 \right] \\
+        C_2 = \frac{-q'''r_{f,s}}{2h_{gc}} + C_4 + C_3\ ln(r_{c,is}) + \frac{q'''(r_{f,s})^2}{4k_f}\\
+        C_2 = 2111.802
+    \end{gathered}
+\end{equation}
+
+Finally, we have our solutions to the temperature distribution in each region. From here, we can determine the center line temperature, the fuel surface temperature, and the clad inner-surface temperature.
+
+\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
+
+\begin{subequations}
+\begin{empheq}[box=\widefbox]{align}
+  T_{cl} &  = 2111.801 \notag\\
+  T_{f,s} & = 664.024 \notag\\
+  T_{c,is} & = 355.876 \notag
+\end{empheq}
+\end{subequations}
+
+\newpage
+Next, to find the volume weighted average temperature, we integrate the pellet temperature distribution by the volume:
+
+\begin{equation}
+    \begin{gathered}
+        \frac{1}{V}\int_V T_f(\Vec{r}) dV = \Bar{T}_f \\
+        \frac{1}{\pi r_{f,s}^2 h} \: \left[\int_0^{r_{f,s}}\int_{-\pi}^{\pi}\int_{0}^{h} r \cdot \left(\frac{-q'''r^2}{4k_f}  + C_2\right)  dh \ d\theta \ dr\right] =\Bar{T}_f \\
+        \frac{1}{r_{f,s}^2} \int_0^{r_{f,s}} \left(\frac{-q'''r^3}{4k_f}  + C_2\ r\right) dr = \Bar{T}_f \\
+        \frac{1}{r_{f,s}^2} \left[\frac{-q'''r^4}{16k_f} +\frac{C_2r^2}{2}\right]\biggr\rvert_0^{r_{f,s}} = \Bar{T}_f \\
+        \frac{1}{r_{f,s}^2} \left[ \frac{-q'''r_{f,s}^4}{16k_f} +\frac{C_2r_{f,s}^2}{2}\right] = \Bar{T}_f\\
+        \Bar{T}_f = \frac{C_2}{2} - \frac{q'''r_{f,s}^2}{16k_f}\\
+    \end{gathered}    
+\end{equation}
+
+And thus:
+
+\[
+\boxed{\Bar{T}_f = 1387.913}
+\]
+
+
+
+
+\newpage
+\newsec{4}
+To begin, we start with an energy balance. 
+\begin{equation}
+    \energybalance
+\end{equation}
+
+Next, recognizing there is no energy into or generated by the CV, this equation becomes:
+\begin{equation}
+    -\Dot{E}_{out} = \Dot{E}_{stored}
+\end{equation}
+
+Next, the rate of energy out of the CV is driven by convection and the rate of energy storage is driven by the specific heat and density of material:
+
+\begin{equation}
+    -h A_s \left(T(r=r_s,t) - T_{\infty}\right) = \rho c_p V \partia{T}{t}
+\end{equation}
+
+Next, we will assume lumped capacitance. That is, the average temperature of the sphere is essentially equivalent to the surface temperature. This allows us to neglect the spatial dependence of the temperature. 
+\begin{equation}
+    -h A_s \left(\Bar{T}(t) - T_{\infty}\right) = \rho c_p V \partia{T}{t}
+\end{equation}
+
+Lastly, prior to solving this ODE, we define the following variable for simplicity:
+
+\begin{equation}
+    \begin{gathered}
+    \Bar{\theta}(t) = \Bar{T}(t) - T_{\infty}\\
+    \partia{\Bar{\theta}}{t} = \partia{\Bar{T}}{t}
+    \end{gathered}
+\end{equation}
+Note that $T_{\infty}$ is a constant and thus the derivative condition holds. Finally, plugging this condition into our ODE from earlier:
+
+\begin{equation}
+    -\frac{h A_s }{\rho c_p V} \Bar{\theta} = \partia{\Bar{\theta}}{t}
+\end{equation}
+
+And thus solving we obtain our solution:
+\begin{equation}
+    \begin{gathered}
+        \Bar{\theta} = \theta_0 e^{\frac{-t}{\tau}} \\
+        \Bar{T} = \theta_0 e^{\frac{-t}{\tau}} + T_{\infty} \\
+        \tau = \frac{\rho c_p V}{h A_s} = .8302778 h
+    \end{gathered}
+\end{equation}
+where $\theta_0$ is equal to the initial temperature difference (650 $^o$F) and $T_{\infty}$ is equal to surrounding fluid temperature (200 $^o$F). 
+
+To solve for the time at which the average temperature of the spheroid is 300 $^o$F, we solve our solution for $t$:
+\begin{equation}
+    \begin{gathered}
+        \Bar{T} = \theta_0 e^{\frac{-t}{\tau}} + T_{\infty} \\
+        \frac{\Bar{T} - T_{\infty}}{\theta_0} = e^{\frac{-t}{\tau}} \\
+        ln\left(\frac{\Bar{T} - T_{\infty}}{\theta_0}\right) = \frac{-t}{\tau} \\
+        t = -\tau ln\left(\frac{\Bar{T} - T_{\infty}}{\theta_0}\right)
+        t = - 0.8302778 ln\left(\frac{300 - 200}{650}\right)
+    \end{gathered}
+\end{equation}
+\[
+\boxed{t = 1.554 \ hours}
+\]
+
+
+
+
+
+
+
+
+
+
+\newsec{5}
+
+To begin, we start with an energy balance over our CV:
+\begin{equation}
+    \energybalance
+\end{equation}
+
+And then, there is no energy out of or generated by our CV, thus:
+
+\begin{equation}
+    \Dot{E}_{in} = \Dot{E}_{stored}
+\end{equation}
+Similar to the previous question, the energy in is driven by convection and the energy stored is driven by the density and specific heat. Dissimilar from the previous question however, the convective term is the fluid temperature minus the surface temperature.
+
+\begin{equation}
+    h A_s\left(T_{\infty} - T(r = r_s, t)\right) = \rho c_p V \partia{T}{t}
+\end{equation}
+
+Again assuming lumped capacitance, and re-utilizing our definition of $\Bar{\theta}$ from the previous question, as well as $\tau$, we can simplify our ODE. Recognizing the temperature delta in the convective term is the negative of $\Bar{\theta}$, we obtain a very similair ODE to the previous question:
+
+\begin{equation}
+    -\frac{1}{\tau} \Bar{\theta} = \partia{\Bar{\theta}}{t}
+\end{equation}
+
+And thus our solution is:
+
+\begin{equation}
+    \begin{gathered}
+        \Bar{\theta} = \theta_0 e^{\frac{-t}{\tau}} \\
+        \Bar{T} = \theta_0 e^{\frac{-t}{\tau}} + T_{\infty}
+    \end{gathered}
+\end{equation}
+
+where $\theta_0$ is the initial temperature differential (-400 $^o$F) and the $T_{\infty}$ is the fluid temperature (500 $^o$F). 
+
+First, solving for our surface area to volume ratio for a cylinder (neglecting the top and bottom components):
+
+\begin{equation}
+    \frac{A_s}{V} = \frac{2\pi rh}{\pi r^2h} = \frac{2}{r} = 48 feet
+\end{equation}
+
+then plugging in our constants and solving for $\tau$ (converting to seconds for legibility):
+\[
+\boxed{\tau = \frac{\rho c_p V}{h A_s} = 0.00291667 \ hours = 10.5 \ seconds}
+\]
+
+Finally, solving for the time until the average temperature of the fuel element is 499 $^o$F:
+
+\begin{equation}
+    \begin{gathered}
+        \Bar{T} = \theta_0 e^{\frac{-t}{\tau}} + T_{\infty} \\
+        \frac{\Bar{T} - T_{\infty}}{\theta_0} = e^{\frac{-t}{\tau}} \\
+        ln\left(\frac{\Bar{T} - T_{\infty}}{\theta_0}\right) = \frac{-t}{\tau} \\
+        t = -\tau ln\left(\frac{\Bar{T} - T_{\infty}}{\theta_0}\right)
+        t = - 0.0029166 ln\left(\frac{499 - 500}{-400}\right)
+    \end{gathered}
+\end{equation}
+
+\[
+\boxed{t = 0.0175 \ hours = 62.91 \ seconds}
+\]
+\end{document}
